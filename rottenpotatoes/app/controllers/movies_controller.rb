@@ -7,9 +7,6 @@ class MoviesController < ApplicationController
   end
 
   def index
-    print("TESTTTTTTTTTTTTTTT")
-    print(params)
-    print("TESTTTTTTTTTTTTTTTT")
     @movies = Movie.all
   end
 
