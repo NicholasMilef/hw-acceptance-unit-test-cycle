@@ -1,1 +1,3 @@
-https://github.com/NicholasMilef/hw-acceptance-unit-test-cycle
+Repo:       https://github.com/NicholasMilef/hw-acceptance-unit-test-cycle
+Cucumber:   https://github.com/NicholasMilef/hw-acceptance-unit-test-cycle/blob/master/rottenpotatoes/cucumber_log.txt
+RSpec:      https://github.com/NicholasMilef/hw-acceptance-unit-test-cycle/blob/master/rottenpotatoes/rspec_log.txt
