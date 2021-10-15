@@ -65,7 +65,7 @@ class MoviesController < ApplicationController
     director = @movie.director
     @movies = Movie.with_director(director)
     print(@movies)
-    if director == "" then
+    if not @movie.director.presence then
       redirect_to movies_path(no_director: 1, title: @movie.title)
     else
       render :index
