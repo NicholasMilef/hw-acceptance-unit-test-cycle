@@ -7,8 +7,27 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
-  end
+    # Code from hw-bdd-cucumber (HW3)
+    sort = params[:sort] || session[:sort]
+    case sort
+    when 'title'
+      ordering,@title_header = {:title => :asc}, 'bg-warning hilite'
+    when 'release_date'
+      ordering,@date_header = {:release_date => :asc}, 'bg-warning hilite'
+    end
+    @all_ratings = Movie.all_ratings
+    @selected_ratings = params[:ratings] || session[:ratings] || {}
+
+    if @selected_ratings == {}
+      @selected_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
+    end
+
+    if params[:sort] != session[:sort] or params[:ratings] != session[:ratings]
+      session[:sort] = sort
+      session[:ratings] = @selected_ratings
+      redirect_to :sort => sort, :ratings => @selected_ratings and return
+    end
+    @movies = Movie.where(rating: @selected_ratings.keys).order(ordering)  end
 
   def new
     # default: render 'new' template
@@ -39,10 +58,13 @@ class MoviesController < ApplicationController
   end
 
   def find_with_same_director
+    @all_ratings = Movie.all_ratings
+    @selected_ratings = @all_ratings
     id = params[:id]
     @movie = Movie.find(id)
     director = @movie.director
     @movies = Movie.with_director(director)
+    print(@movies)
     if director == "" then
       redirect_to movies_path(no_director: 1, title: @movie.title)
     else
